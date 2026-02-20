@@ -1,5 +1,5 @@
 ---
-title: Gradio Chatbot
+title: STEM Luminary Chatbot
 emoji: 💬
 colorFrom: yellow
 colorTo: purple
