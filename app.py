@@ -45,7 +45,7 @@ Educate, inspire, and inform users about mathematics, space exploration, perseve
 
 def respond(message, history, max_tokens, temperature, top_p):
     client = InferenceClient(
-        model="meta-llama/Meta-Llama-3-8B-Instruct"
+        model="HuggingFaceH4/zephyr-7b-beta"
     )
 
     # Start conversation with system prompt
