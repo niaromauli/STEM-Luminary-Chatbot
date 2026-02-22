@@ -49,7 +49,6 @@ def respond(
     max_tokens,
     temperature,
     top_p,
-    hf_token: gr.OAuthToken,
 ):
     client = InferenceClient(
     model="openai/gpt-oss-20b",
