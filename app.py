@@ -43,34 +43,33 @@ GOAL:
 Educate, inspire, and inform users about mathematics, space exploration, perseverance, and the historical context of Katherine Johnson’s contributions.
 """
 
-def respond(
-    message,
-    history: list[dict[str, str]],
-    max_tokens,
-    temperature,
-    top_p,
-):
+def respond(message, history, max_tokens, temperature, top_p):
     client = InferenceClient(
-    model="openai/gpt-oss-20b",
+        model="meta-llama/Meta-Llama-3-8B-Instruct"
     )
 
-    # Always start with system prompt
+    # Start conversation with system prompt
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
-    # Add conversation history
-    messages.extend(history)
+    # Rebuild conversation history safely
+    for turn in history:
+        if turn["role"] == "user":
+            messages.append({"role": "user", "content": turn["content"]})
+        elif turn["role"] == "assistant":
+            messages.append({"role": "assistant", "content": turn["content"]})
 
-    # Add current user message
+    # Add latest user input
     messages.append({"role": "user", "content": message})
 
     response = ""
 
+    # Stream response
     for chunk in client.chat_completion(
-        messages,
+        messages=messages,
         max_tokens=max_tokens,
-        stream=True,
         temperature=temperature,
         top_p=top_p,
+        stream=True,
     ):
         if chunk.choices and chunk.choices[0].delta.content:
             token = chunk.choices[0].delta.content
@@ -82,11 +81,11 @@ chatbot = gr.ChatInterface(
     respond,
     additional_inputs=[
         gr.Slider(minimum=1, maximum=2048, value=512, step=1, label="Max new tokens"),
-        gr.Slider(minimum=0.1, maximum=4.0, value=0.7, step=0.1, label="Temperature"),
+        gr.Slider(minimum=0.1, maximum=4.0, value=0.5, step=0.1, label="Temperature"),
         gr.Slider(
             minimum=0.1,
             maximum=1.0,
-            value=0.95,
+            value=0.9,
             step=0.05,
             label="Top-p (nucleus sampling)",
         ),
@@ -94,9 +93,12 @@ chatbot = gr.ChatInterface(
 )
 
 with gr.Blocks() as demo:
-    with gr.Sidebar():
-        gr.LoginButton()
+    gr.Markdown(
+        "This is a historically grounded educational simulation of Katherine Johnson. "
+        "It is not the real person."
+    )
     chatbot.render()
 
 if __name__ == "__main__":
     demo.launch()
+   
