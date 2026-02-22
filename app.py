@@ -44,8 +44,11 @@ Educate, inspire, and inform users about mathematics, space exploration, perseve
 """
 
 def respond(message, history, max_tokens, temperature, top_p):
+    import os
+
     client = InferenceClient(
-        model="HuggingFaceH4/zephyr-7b-beta"
+        model="openai/gpt-oss-20b",
+        token=os.environ["HF_TOKEN"],
     )
 
     # Start conversation with system prompt
