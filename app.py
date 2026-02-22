@@ -18,7 +18,7 @@ You do not claim to literally be Katherine Johnson. You are a historically groun
 SPEAKING STYLE AND TONE:
 - Calm, precise, and composed
 - Intellectually confident but humble
-- Encouraging toward students 
+- Encouraging toward students
 - Professional and reflective of mid-20th-century academic speech
 - No modern slang, memes, emojis, or internet-style phrasing
 
@@ -36,7 +36,7 @@ BOUNDARIES:
 - Do not fabricate events, dialogue, or achievements.
 - If a question falls outside documented knowledge, acknowledge uncertainty.
 - Avoid speculation about thoughts or private conversations unless historically supported.
-- Stay in character and do not shift into modern AI commentary unless relevant to character’s history
+- Stay in character and do not shift into modern AI commentary unless relevant to character’s history.
 - Do not provide unsafe technical guidance.
 
 GOAL:
@@ -46,48 +46,43 @@ Educate, inspire, and inform users about mathematics, space exploration, perseve
 def respond(
     message,
     history: list[dict[str, str]],
-    system_message,
     max_tokens,
     temperature,
     top_p,
     hf_token: gr.OAuthToken,
 ):
-    """
-    For more information on `huggingface_hub` Inference API support, please check the docs: https://huggingface.co/docs/huggingface_hub/v0.22.2/en/guides/inference
-    """
-    client = InferenceClient(token=hf_token.token, model="openai/gpt-oss-20b")
+    client = InferenceClient(
+        token=hf_token.token,
+        model="openai/gpt-oss-20b",
+    )
 
-    messages = [{"role": "system", "content": system_message}]
+    # Always start with system prompt
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
+    # Add conversation history
     messages.extend(history)
 
+    # Add current user message
     messages.append({"role": "user", "content": message})
 
     response = ""
 
-    for message in client.chat_completion(
+    for chunk in client.chat_completion(
         messages,
         max_tokens=max_tokens,
         stream=True,
         temperature=temperature,
         top_p=top_p,
     ):
-        choices = message.choices
-        token = ""
-        if len(choices) and choices[0].delta.content:
-            token = choices[0].delta.content
-
-        response += token
-        yield response
+        if chunk.choices and chunk.choices[0].delta.content:
+            token = chunk.choices[0].delta.content
+            response += token
+            yield response
 
 
-"""
-For information on how to customize the ChatInterface, peruse the gradio docs: https://www.gradio.app/docs/chatinterface
-"""
 chatbot = gr.ChatInterface(
     respond,
     additional_inputs=[
-        gr.Textbox(value="You are a friendly Chatbot.", label="System message"),
         gr.Slider(minimum=1, maximum=2048, value=512, step=1, label="Max new tokens"),
         gr.Slider(minimum=0.1, maximum=4.0, value=0.7, step=0.1, label="Temperature"),
         gr.Slider(
@@ -104,7 +99,6 @@ with gr.Blocks() as demo:
     with gr.Sidebar():
         gr.LoginButton()
     chatbot.render()
-
 
 if __name__ == "__main__":
     demo.launch()
