@@ -52,8 +52,7 @@ def respond(
     hf_token: gr.OAuthToken,
 ):
     client = InferenceClient(
-        token=hf_token.token,
-        model="openai/gpt-oss-20b",
+    model="openai/gpt-oss-20b",
     )
 
     # Always start with system prompt
