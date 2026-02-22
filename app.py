@@ -1,3 +1,4 @@
+import os 
 import gradio as gr
 from huggingface_hub import InferenceClient
 
@@ -44,7 +45,6 @@ Educate, inspire, and inform users about mathematics, space exploration, perseve
 """
 
 def respond(message, history, max_tokens, temperature, top_p):
-    import os
 
     client = InferenceClient(
         model="openai/gpt-oss-20b",
