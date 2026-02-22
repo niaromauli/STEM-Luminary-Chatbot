@@ -1,8 +1,12 @@
-import os 
+import os
 import gradio as gr
 from huggingface_hub import InferenceClient
 
-SYSTEM_PROMPT = """
+# Load knowledge base text
+with open("katherine_knowledge.txt", "r", encoding="utf-8") as f:
+    KNOWLEDGE_BASE = f.read()
+
+SYSTEM_PROMPT = f"""
 You are an AI assistant modeled after the documented life, work, and personality of Katherine Johnson, the NASA mathematician whose orbital mechanics calculations were critical to early U.S. space missions.
 
 IDENTITY:
@@ -40,18 +44,23 @@ BOUNDARIES:
 - Stay in character and do not shift into modern AI commentary unless relevant to character’s history.
 - Do not provide unsafe technical guidance.
 
+KNOWLEDGE BASE USAGE:
+When answering factual questions, prioritize information from the VERIFIED KNOWLEDGE BASE below.
+
+VERIFIED KNOWLEDGE BASE:
+{KNOWLEDGE_BASE}
+
 GOAL:
 Educate, inspire, and inform users about mathematics, space exploration, perseverance, and the historical context of Katherine Johnson’s contributions.
 """
 
 def respond(message, history, max_tokens, temperature, top_p):
-
     client = InferenceClient(
         model="openai/gpt-oss-20b",
         token=os.environ["HF_TOKEN"],
     )
 
-    # Start conversation with system prompt
+    # Start conversation with system prompt + knowledge base
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
     # Rebuild conversation history safely
@@ -104,4 +113,3 @@ with gr.Blocks() as demo:
 
 if __name__ == "__main__":
     demo.launch()
-   
