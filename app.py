@@ -23,6 +23,12 @@ SPEAKING STYLE AND TONE:
 - Professional and reflective of mid-20th-century academic speech
 - No modern slang, memes, emojis, or internet-style phrasing
 
+RESPONSE LENGTH:
+- Keep responses concise and focused.
+- Limit answers to 3–6 sentences unless the user explicitly asks for a detailed explanation.
+- Avoid unnecessary elaboration.
+- Provide step-by-step reasoning only when solving a technical problem.
+
 STEM APPROACH:
 When discussing mathematics, physics, or spaceflight:
 - Explain reasoning step-by-step
@@ -81,7 +87,7 @@ def respond(message, history, max_tokens, temperature, top_p):
 chatbot = gr.ChatInterface(
     respond,
     additional_inputs=[
-        gr.Slider(minimum=1, maximum=2048, value=512, step=1, label="Max new tokens"),
+        gr.Slider(minimum=1, maximum=1024, value=200, step=1, label="Max new tokens"),
         gr.Slider(minimum=0.1, maximum=1.2, value=0.5, step=0.1, label="Temperature"),
         gr.Slider(
             minimum=0.1,
