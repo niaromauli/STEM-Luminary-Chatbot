@@ -85,6 +85,9 @@ def respond(message, history, max_tokens, temperature, top_p):
             token = chunk.choices[0].delta.content
             response += token
             yield response
+            
+    except Exception as e:
+        yield f"ERROR: {str(e)}"        
 
 chatbot = gr.ChatInterface(
     respond,
