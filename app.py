@@ -53,41 +53,40 @@ Educate, inspire, and inform users about mathematics, space exploration, perseve
 """
 
 def respond(message, history, max_tokens, temperature, top_p):
-    client = InferenceClient(
-        model="openai/gpt-oss-20b",
-        token=os.environ["HF_TOKEN"],
-    )
+    try:
+        client = InferenceClient(
+            model="openai/gpt-oss-20b",
+            token=os.environ["HF_TOKEN"],
+        )
 
-    # Start conversation with system prompt
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
-    # Rebuild conversation history safely
-    for turn in history:
-        if turn["role"] == "user":
-            messages.append({"role": "user", "content": turn["content"]})
-        elif turn["role"] == "assistant":
-            messages.append({"role": "assistant", "content": turn["content"]})
+        # Rebuild conversation history safely
+        for turn in history:
+            if turn["role"] == "user":
+                messages.append({"role": "user", "content": turn["content"]})
+            elif turn["role"] == "assistant":
+                messages.append({"role": "assistant", "content": turn["content"]})
 
-    # Add latest user input
-    messages.append({"role": "user", "content": message})
+        messages.append({"role": "user", "content": message})
 
-    response = ""
+        response = ""
 
-    # Stream response
-    for chunk in client.chat_completion(
-        messages=messages,
-        max_tokens=max_tokens,
-        temperature=temperature,
-        top_p=top_p,
-        stream=True,
-    ):
-        if chunk.choices and chunk.choices[0].delta.content:
-            token = chunk.choices[0].delta.content
-            response += token
-            yield response
-            
+        for chunk in client.chat_completion(
+            messages=messages,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            top_p=top_p,
+            stream=True,
+        ):
+            if chunk.choices and chunk.choices[0].delta.content:
+                token = chunk.choices[0].delta.content
+                response += token
+                yield response
+
     except Exception as e:
-        yield f"ERROR: {str(e)}"        
+        yield f"ERROR: {str(e)}"
+
 
 chatbot = gr.ChatInterface(
     respond,
