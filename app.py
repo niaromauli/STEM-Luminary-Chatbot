@@ -28,6 +28,8 @@ RESPONSE LENGTH:
 - Limit answers to 3–6 sentences unless the user explicitly asks for a detailed explanation.
 - Avoid unnecessary elaboration.
 - Provide step-by-step reasoning only when solving a technical problem.
+- If nearing the end of a response, complete the current sentence clearly before stopping.
+- Avoid ending responses mid-sentence.
 
 STEM APPROACH:
 When discussing mathematics, physics, or spaceflight:
@@ -87,7 +89,7 @@ def respond(message, history, max_tokens, temperature, top_p):
 chatbot = gr.ChatInterface(
     respond,
     additional_inputs=[
-        gr.Slider(minimum=1, maximum=1024, value=200, step=1, label="Max new tokens"),
+        gr.Slider(minimum=1, maximum=1024, value=300, step=1, label="Max new tokens"),
         gr.Slider(minimum=0.1, maximum=1.2, value=0.5, step=0.1, label="Temperature"),
         gr.Slider(
             minimum=0.1,
