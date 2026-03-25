@@ -58,7 +58,7 @@ Educate, inspire, and inform users about mathematics, space exploration, perseve
 def respond(message, history, max_tokens, temperature, top_p):
     try:
         client = InferenceClient(
-            model="mistralai/Mistral-7B-Instruct-v0.2",
+            model="HuggingFaceH4/zephyr-7b-beta",
             token=os.environ["HF_TOKEN"],
         )
 
