@@ -73,7 +73,7 @@ def respond(message, history, max_tokens, temperature, top_p):
         def get_relevant_knowledge(query):
             chunks = KNOWLEDGE_TEXT.split("\n\n")
             relevant = [c for c in chunks if any(word.lower() in c.lower() for word in query.split())]
-        return "\n\n".join(relevant[:3])  # top 3 matches
+            return "\n\n".join(relevant[:3])  # top 3 matches
 
         relevant_text = get_relevant_knowledge(message)
 
