@@ -58,7 +58,7 @@ Educate, inspire, and inform users about mathematics, space exploration, perseve
 def respond(message, history, max_tokens, temperature, top_p):
     try:
         client = InferenceClient(
-            model="HuggingFaceH4/zephyr-7b-beta",
+            model="openai/gpt-oss-20b",
             token=os.environ["HF_TOKEN"],
         )
 
