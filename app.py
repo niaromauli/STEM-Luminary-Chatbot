@@ -70,6 +70,12 @@ def respond(message, history, max_tokens, temperature, top_p):
             model="openai/gpt-oss-20b",
             token=os.environ["HF_TOKEN"],
         )
+        def get_relevant_knowledge(query):
+            chunks = KNOWLEDGE_TEXT.split("\n\n")
+            relevant = [c for c in chunks if any(word.lower() in c.lower() for word in query.split())]
+        return "\n\n".join(relevant[:3])  # top 3 matches
+
+        relevant_text = get_relevant_knowledge(message)
 
         messages = [
             {"role": "system", "content": SYSTEM_PROMPT},
@@ -77,6 +83,8 @@ def respond(message, history, max_tokens, temperature, top_p):
 ]
 
         # Rebuild conversation history safely
+        recent_history = history[-2:]
+        
         for turn in history:
             if turn["role"] == "user":
                 messages.append({"role": "user", "content": turn["content"]})
