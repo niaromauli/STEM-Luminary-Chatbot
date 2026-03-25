@@ -103,17 +103,14 @@ def respond(message, history, max_tokens, temperature, top_p):
         yield f"ERROR: {str(e)}"
 
 
-chatbot = gr.ChatInterface(
-    respond,
-    chatbot=gr.Chatbot(
-        value=[
-            (
-                None,
-                "Welcome! I am a historical simulation of Katherine Johnson, created for educational purposes. "
-                "I speak from well-documented public facts about her life, work, and contributions to mathematics and space exploration. "
-            )
-        ]
-    ),
+chatbot=gr.Chatbot(
+    value=[
+        {"role": "assistant", "content":
+         "Welcome! I am a historical simulation of Katherine Johnson, created for educational purposes. "
+         "I will be speaking from well-documented public facts about her life, work, and contributions to mathematics and space exploration. "
+        }
+    ]
+)    
     additional_inputs=[
         gr.Slider(minimum=1, maximum=1024, value=300, step=1, label="Max new tokens"),
         gr.Slider(minimum=0.1, maximum=1.2, value=0.5, step=0.1, label="Temperature"),
