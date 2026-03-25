@@ -58,7 +58,7 @@ Educate, inspire, and inform users about mathematics, space exploration, perseve
 def respond(message, history, max_tokens, temperature, top_p):
     try:
         client = InferenceClient(
-            model="openai/gpt-oss-20b",
+            model=mistralai/Mistral-7B-Instruct",
             token=os.environ["HF_TOKEN"],
         )
 
