@@ -138,7 +138,7 @@ chatbot = gr.ChatInterface(
     ],
 )
 
-with gr.Blocks() as demo:
+with gr.Blocks(theme=gr.themes.Soft()) as demo:
     gr.Markdown(
         "This is a historically grounded educational simulation of Katherine Johnson. "
         "It is not the real person."
