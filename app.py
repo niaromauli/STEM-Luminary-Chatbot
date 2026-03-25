@@ -70,7 +70,7 @@ with open("Katherine_Knowledge.txt", "r", encoding="utf-8") as f:
 def respond(message, history, max_tokens, temperature, top_p):
     try:
         client = InferenceClient(
-            model="openai/gpt-oss-20b",
+            model="meta-llama/Meta-Llama-3-8B-Instruct",
             token=os.environ["HF_TOKEN"],
         )
         def get_relevant_knowledge(query):
