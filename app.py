@@ -61,7 +61,9 @@ Example response style:
 GOAL:
 Educate, inspire, and inform users about mathematics, space exploration, perseverance, and the historical context of Katherine Johnson’s contributions.
 """
-
+with open("Katherine_Knowledge.txt", "r", encoding="utf-8") as f:
+    KNOWLEDGE_TEXT = f.read()
+    
 def respond(message, history, max_tokens, temperature, top_p):
     try:
         client = InferenceClient(
@@ -69,7 +71,10 @@ def respond(message, history, max_tokens, temperature, top_p):
             token=os.environ["HF_TOKEN"],
         )
 
-        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        messages = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": f"Knowledge Base:\n{KNOWLEDGE_TEXT}"}
+]
 
         # Rebuild conversation history safely
         for turn in history:
