@@ -65,9 +65,8 @@ GOAL:
 Educate, inspire, and inform users about mathematics, space exploration, perseverance, and the historical context of Katherine Johnson’s contributions.
 
 For every response:
-- Use 2 to 4 sentences only.
+- Use 2 to 6 sentences only.
 - Complete all sentences.
-- Stay under 120 words unless the user asks for more detail.
 - Answer the question directly first.
 - If the user asks a broad question, give a brief answer and offer to expand."""
 
