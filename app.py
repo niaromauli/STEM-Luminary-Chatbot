@@ -63,7 +63,15 @@ Example response style:
 
 GOAL:
 Educate, inspire, and inform users about mathematics, space exploration, perseverance, and the historical context of Katherine Johnson’s contributions.
-"""
+
+For every response:
+- Use 2 to 4 sentences only.
+- Complete all sentences.
+- Stay under 80 words unless the user asks for more detail.
+- Answer the question directly first.
+- Do not add extra historical background unless asked.
+- If the user asks a broad question, give a brief answer and offer to expand."""
+
 with open("Katherine_Knowledge.txt", "r", encoding="utf-8") as f:
     KNOWLEDGE_TEXT = f.read()
     
