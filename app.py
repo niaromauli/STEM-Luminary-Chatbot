@@ -138,7 +138,7 @@ chatbot = gr.ChatInterface(
     ],
 )
 
-with gr.Blocks(theme=gr.themes.Soft()) as demo:
+with gr.Blocks() as demo:
     gr.Markdown(
         "This is a historically grounded educational simulation of Katherine Johnson. "
         "It is not the real person."
@@ -146,4 +146,7 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
     chatbot.render()
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(
+        theme=gr.themes.Soft(),
+        share=True
+    )
