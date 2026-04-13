@@ -69,7 +69,6 @@ For every response:
 - Complete all sentences.
 - Stay under 120 words unless the user asks for more detail.
 - Answer the question directly first.
-- Do not add extra historical background unless asked.
 - If the user asks a broad question, give a brief answer and offer to expand."""
 
 with open("Katherine_Knowledge.txt", "r", encoding="utf-8") as f:
