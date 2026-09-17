@@ -20,6 +20,10 @@ The chatbot uses **curated biographical information and personality-focused prom
 
 > **Note:** This is an educational simulation and does not represent Katherine Johnson's actual words or opinions.
 
+## Tech Stack
+
+Python · Llama 3 8B Instruct · Gradio · Hugging Face Spaces · Jupyter · Git/GitHub
+
 ## How It Works
 
 ```text
